@@ -4,7 +4,7 @@
   "description": "esay to use and simple json verstion control ",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --require babel-core/register"
+    "test": "mocha --require babel-core/register --watch "
   },
   "author": "Hen Shalom",
   "license": "ISC",
