@@ -2,9 +2,9 @@ function getJsonDiff(currentJson, newJson) {
     let pathChange = [];
     checkObjectTypeDiffAdd(currentJson, newJson, pathChange, "");
     checkObjectDiffDelete(currentJson, newJson, pathChange, "");
-
     return pathChange;
 }
+
 function checkObjectTypeDiffAdd(currentJson, newJson, changeList, currentPath) {
     if (typeof newJson == "object") {
         for (let key of Object.keys(newJson))
