@@ -76,7 +76,7 @@ describe('Json Diff', () => {
       const res = [];
       checkArryTypeDiff([], ['1'], res);
       expect(res[0]).to.equal('Add .[0]>1');
-    });s
+    });
     it('should return the array update', () => {
       const res = [];
       checkArryTypeDiff(['3'], ['1'], res);
