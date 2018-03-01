@@ -43,7 +43,14 @@ describe("Json Diff", function() {
                 { color: { deep: "blue" }, shadow: "light" },
                 { color: { deep: "blue" }, shadow: "dark" }
             );
-            expect(res).to.deep.equal([ "Update .shadow:dark"]);
+            expect(res).to.deep.equal(["Update .shadow:dark"]);
+        });
+        it("write Delete if the head is ahead  ", function() {
+            let res = getJsonDiff(
+                { color: { deep: "blue" }, shadow: "light" },
+                { color: { deep: "blue" } }
+            );
+            expect(res).to.deep.equal(["Delete .shadow:light"]);
         });
     });
 });
