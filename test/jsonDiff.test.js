@@ -12,17 +12,17 @@ describe('Json Diff', () => {
   describe('#checkObjectTypeDiffAdd', () => {
     it('should return the property diff between two object', () => {
       const res = [];
-      checkObjectTypeDiffAdd({}, { color: 'blue' }, res, '');
+      checkObjectTypeDiffAdd({}, { color: 'blue' }, res);
       expect(res[0]).to.equal('Add .color:blue');
     });
     it('should return the property inside property diff between two object', () => {
       const res = [];
-      checkObjectTypeDiffAdd({}, { color: { deep: 'blue' } }, res, '');
+      checkObjectTypeDiffAdd({}, { color: { deep: 'blue' } }, res);
       expect(res[0]).to.equal('Add .color.deep:blue');
     });
     it('should return multi properties diff ', () => {
       const res = [];
-      checkObjectTypeDiffAdd({}, { color: { deep: 'blue' }, shadow: 'light' }, res, '');
+      checkObjectTypeDiffAdd({}, { color: { deep: 'blue' }, shadow: 'light' }, res);
       expect(res).to.deep.equal(['Add .color.deep:blue', 'Add .shadow:light']);
     });
     it('should ignore properties that also exists in the old json ', () => {
@@ -31,7 +31,6 @@ describe('Json Diff', () => {
         { shadow: 'light' },
         { color: { deep: 'blue' }, shadow: 'light' },
         res,
-        '',
       );
       expect(res).to.deep.equal(['Add .color.deep:blue']);
     });
@@ -41,7 +40,6 @@ describe('Json Diff', () => {
         { color: { deep: 'blue' }, shadow: 'light' },
         { color: { deep: 'blue' }, shadow: 'light' },
         res,
-        '',
       );
       expect(res).to.deep.equal([]);
     });
@@ -51,7 +49,6 @@ describe('Json Diff', () => {
         { color: { deep: 'blue' }, shadow: 'light' },
         { color: { deep: 'blue' }, shadow: 'dark' },
         res,
-        '',
       );
       expect(res).to.deep.equal(['Update .shadow:dark']);
     });
@@ -63,7 +60,6 @@ describe('Json Diff', () => {
         { color: { deep: 'blue' }, shadow: 'light' },
         { color: { deep: 'blue' } },
         res,
-        '',
       );
       expect(res).to.deep.equal(['Delete .shadow:light']);
     });
@@ -78,17 +74,17 @@ describe('Json Diff', () => {
   describe('#checkArryTypeDiff', () => {
     it('should return the array diff', () => {
       const res = [];
-      checkArryTypeDiff([], ['1'], res, '');
+      checkArryTypeDiff([], ['1'], res);
       expect(res[0]).to.equal('Add .[0]>1');
-    });
+    });s
     it('should return the array update', () => {
       const res = [];
-      checkArryTypeDiff(['3'], ['1'], res, '');
+      checkArryTypeDiff(['3'], ['1'], res);
       expect(res[0]).to.equal('Update .[0]>1');
     });
     it('should return the diff of a complex array', () => {
       const res = [];
-      checkArryTypeDiff([], [[1, 2], [3, 4]], res, '');
+      checkArryTypeDiff([], [[1, 2], [3, 4]], res);
       expect(res).to.deep.equal([
         'Add .[0].[0]>1',
         'Add .[0].[1]>2',

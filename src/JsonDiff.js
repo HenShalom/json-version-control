@@ -1,4 +1,4 @@
-function checkArryTypeDiff(currentArray, newArray, changeList, currentPath) {
+function checkArryTypeDiff(currentArray, newArray, changeList, currentPath = '') {
   if (Array.isArray(newArray) && newArray !== undefined) {
     for (let key = 0; key < newArray.length; key += 1) {
       checkArryTypeDiff(
@@ -13,7 +13,7 @@ function checkArryTypeDiff(currentArray, newArray, changeList, currentPath) {
   }
 }
 
-function checkObjectTypeDiffAdd(currentJson, newJson, changeList, currentPath) {
+function checkObjectTypeDiffAdd(currentJson, newJson, changeList, currentPath = '') {
   if (typeof newJson === 'object') {
     if (!Array.isArray(newJson)) {
       Object.keys(newJson).forEach((key) => {
@@ -32,7 +32,7 @@ function checkObjectTypeDiffAdd(currentJson, newJson, changeList, currentPath) {
   }
 }
 
-function checkObjectDiffDelete(currentJson, newJson, changeList, currentPath) {
+function checkObjectDiffDelete(currentJson, newJson, changeList, currentPath = '') {
   if (typeof currentJson === 'object') {
     Object.keys(currentJson).forEach((key) => {
       checkObjectDiffDelete(
@@ -49,8 +49,8 @@ function checkObjectDiffDelete(currentJson, newJson, changeList, currentPath) {
 
 function getJsonDiff(currentJson, newJson) {
   const pathChange = [];
-  checkObjectTypeDiffAdd(currentJson, newJson, pathChange, '');
-  checkObjectDiffDelete(currentJson, newJson, pathChange, '');
+  checkObjectTypeDiffAdd(currentJson, newJson, pathChange);
+  checkObjectDiffDelete(currentJson, newJson, pathChange);
   return pathChange;
 }
 export { getJsonDiff, checkObjectTypeDiffAdd, checkObjectDiffDelete, checkArryTypeDiff };
