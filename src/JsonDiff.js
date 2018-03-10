@@ -1,7 +1,7 @@
-function checkArryTypeDiff(currentArray, newArray, changeList, currentPath = '') {
+function checkArryTypeDiffAdd(currentArray, newArray, changeList, currentPath = '') {
   if (Array.isArray(newArray) && newArray !== undefined) {
     for (let key = 0; key < newArray.length; key += 1) {
-      checkArryTypeDiff(
+      checkArryTypeDiffAdd(
         currentArray[key] ? currentArray[key] : [],
         newArray[key],
         changeList,
@@ -10,6 +10,20 @@ function checkArryTypeDiff(currentArray, newArray, changeList, currentPath = '')
     }
   } else if (currentArray !== newArray) {
     changeList.push(`${Array.isArray(currentArray) ? 'Add' : 'Update'} ${currentPath}>${newArray}`);
+  }
+}
+function checkArryTypeDiffDelete(currentArray, newArray, changeList, currentPath = '') {
+  if (Array.isArray(currentArray) && currentArray !== undefined) {
+    for (let key = 0; key < currentArray.length; key += 1) {
+      checkArryTypeDiffDelete(
+        currentArray[key],
+        newArray[key] ? newArray[key] : [],
+        changeList,
+        `${currentPath}.[${key}]`,
+      );
+    }
+  } else if (currentArray !== newArray) {
+    changeList.push(`Delete ${currentPath}>${currentArray}`);
   }
 }
 
@@ -25,7 +39,7 @@ function checkObjectTypeDiffAdd(currentJson, newJson, changeList, currentPath = 
         );
       });
     } else {
-      checkArryTypeDiff(currentJson, newJson, changeList, currentPath);
+      checkArryTypeDiffAdd(currentJson, newJson, changeList, currentPath);
     }
   } else if (currentJson !== newJson) {
     changeList.push(`${typeof currentJson === 'object' ? 'Add' : 'Update'} ${currentPath}:${newJson}`);
@@ -53,4 +67,10 @@ function getJsonDiff(currentJson, newJson) {
   checkObjectDiffDelete(currentJson, newJson, pathChange);
   return pathChange;
 }
-export { getJsonDiff, checkObjectTypeDiffAdd, checkObjectDiffDelete, checkArryTypeDiff };
+export {
+  getJsonDiff,
+  checkObjectTypeDiffAdd,
+  checkObjectDiffDelete,
+  checkArryTypeDiffAdd,
+  checkArryTypeDiffDelete,
+};
